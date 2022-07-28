@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//First commit
+// First commit
 
 export default class Header extends Component {
   render() {
