@@ -30,9 +30,10 @@ export function sumAllExpenses() {
     const { wallet: { expenses } } = getState();
     const totalExpenses = expenses
       .reduce(
-        (total, curr) => total + (curr.value * curr.exchangeRates[curr.currency].ask), 0,
+        (total, curr) => total + (
+          parseFloat(curr.value) * curr.exchangeRates[curr.currency].ask), 0,
       ).toFixed(2);
-    console.log(totalExpenses);
+    // console.log(totalExpenses);
     dispatch(sumExpenses(totalExpenses));
   };
 }
@@ -43,7 +44,9 @@ export function addExpense(expense) {
     const exchangeRates = await fecthCurrencies();
     // const { exchangeRates } = currData;
     const resultExpense = { ...expense, exchangeRates };
-    sumAllExpenses();
+    // PROVAVELMENTE ESTA ATRASADDO PQ A FUNC sumAllExpenses esta sendo
+    // chamada antes de atualuzar o estado das expenses
+    // sumAllExpenses();
     dispatch(addExpenseAction(resultExpense));
   };
 }

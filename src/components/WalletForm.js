@@ -10,7 +10,7 @@ class WalletForm extends Component {
       descriptionInput: '',
       tagsInput: '',
       valueInput: '',
-      methodInput: '',
+      methodInput: 'Cartão de débito',
       currencyInput: 'BTC',
 
       // mover states abaixo para o estado do redux no reducer wallet
@@ -28,10 +28,7 @@ class WalletForm extends Component {
   resetInputs = () => {
     this.setState({
       descriptionInput: '',
-      tagsInput: '',
       valueInput: '',
-      methodInput: '',
-      currencyInput: '',
     });
   }
 
@@ -44,12 +41,13 @@ class WalletForm extends Component {
       methodInput } = this.state;
 
     const newExpense = {
-      id: expenses.length,
-      value: parseFloat(valueInput),
-      description: descriptionInput,
+      value: valueInput,
       currency: currencyInput,
       method: methodInput,
       tag: tagsInput,
+      description: descriptionInput,
+      id: expenses.length,
+
     };
 
     await addExp(newExpense);
