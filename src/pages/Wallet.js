@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import WalletForm from '../components/WalletForm';
-import { fecthCurrencies } from '../redux/actions';
+import { getCurrCodes } from '../redux/actions/index';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -14,8 +14,8 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    const { fecthCurr } = this.props;
-    fecthCurr();
+    const { getCodes } = this.props;
+    getCodes();
   }
 
   render() {
@@ -28,7 +28,7 @@ class Wallet extends React.Component {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  fecthCurr: () => dispatch(fecthCurrencies()),
+  getCodes: () => dispatch(getCurrCodes()),
 });
 
 Wallet.propTypes = {

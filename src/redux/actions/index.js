@@ -1,29 +1,49 @@
+import * as actionTypes from './actionTypes';
+import fecthCurrencies from '../../helpers/fetchCurrencies';
+
 // Coloque aqui suas actions
-const END_POINT = 'https://economia.awesomeapi.com.br/json/all';
-const USER_LOGIN = 'USER_LOGIN';
-const FAILED_REQUEST = 'FAILED_REQUEST';
-const REQUEST_API = 'REQUEST_API';
-const RECEIVE_DATA = 'RECEIVE_DATA';
 
-const userLogin = (email) => ({ type: USER_LOGIN, email });
+export const userLogin = (email) => ({ type: actionTypes.USER_LOGIN, email });
 
-const requestApi = () => ({ type: REQUEST_API });
-const receiveData = (currencies) => ({ type: RECEIVE_DATA, currencies });
+const requestApi = () => ({ type: actionTypes.REQUEST_API });
 
-const failedRequest = (error) => ({ type: FAILED_REQUEST, error });
+const sumExpenses = (totalExpenses) => (
+  { type: actionTypes.SUM_EXPENSES, totalExpenses });
 
-export function fecthCurrencies() {
+const receiveData = (payload) => ({ type: actionTypes.RECEIVE_DATA, payload });
+
+export const addExpenseAction = (expense) => ({ type: actionTypes.ADD_EXPENSE, expense });
+
+export function getCurrCodes() {
   return async (dispatch) => {
     dispatch(requestApi());
-    try {
-      const fecthData = await fetch(END_POINT);
-      const currenciesInfo = await fecthData.json();
+    const currData = await fecthCurrencies();
+    const currenciesCodes = Object.keys(currData);
 
-      dispatch(receiveData(currenciesInfo));
-    } catch (error) {
-      dispatch(failedRequest(error));
-    }
+    const filtredCodes = currenciesCodes.filter((code) => code !== 'USDT');
+    dispatch(receiveData(filtredCodes));
+    // console.log(actionTypes);
+  };
+}
+export function sumAllExpenses() {
+  return (dispatch, getState) => {
+    const { wallet: { expenses } } = getState();
+    const totalExpenses = expenses
+      .reduce(
+        (total, curr) => total + (curr.value * curr.exchangeRates[curr.currency].ask), 0,
+      ).toFixed(2);
+    console.log(totalExpenses);
+    dispatch(sumExpenses(totalExpenses));
   };
 }
 
-export default userLogin;
+export function addExpense(expense) {
+  return async (dispatch) => {
+    dispatch(requestApi());
+    const exchangeRates = await fecthCurrencies();
+    // const { exchangeRates } = currData;
+    const resultExpense = { ...expense, exchangeRates };
+    sumAllExpenses();
+    dispatch(addExpenseAction(resultExpense));
+  };
+}
