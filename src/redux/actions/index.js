@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import fecthCurrencies from '../../helpers/fetchCurrencies';
 
-// Coloque aqui suas actions
+// ActionCreatores
 
 export const userLogin = (email) => ({ type: actionTypes.USER_LOGIN, email });
 
@@ -14,6 +14,11 @@ const receiveData = (payload) => ({ type: actionTypes.RECEIVE_DATA, payload });
 
 export const addExpenseAction = (expense) => ({ type: actionTypes.ADD_EXPENSE, expense });
 
+const removeExpenseAction = (filtredExpenses) => (
+  { type: actionTypes.REMOVE_EXPENSE, filtredExpenses });
+
+// thunkFuntions
+
 export function getCurrCodes() {
   return async (dispatch) => {
     dispatch(requestApi());
@@ -22,7 +27,6 @@ export function getCurrCodes() {
 
     const filtredCodes = currenciesCodes.filter((code) => code !== 'USDT');
     dispatch(receiveData(filtredCodes));
-    // console.log(actionTypes);
   };
 }
 
@@ -34,7 +38,6 @@ export function sumAllExpenses() {
         (total, curr) => total + (
           parseFloat(curr.value) * curr.exchangeRates[curr.currency].ask), 0,
       ).toFixed(2);
-    // console.log(totalExpenses);
     dispatch(sumExpenses(totalExpenses));
   };
 }
@@ -47,5 +50,14 @@ export function addExpense(expense) {
     const resultExpense = { ...expense, exchangeRates };
 
     dispatch(addExpenseAction(resultExpense));
+  };
+}
+
+export function removeExpense(expense) {
+  return (dispatch, getState) => {
+    const { wallet: { expenses } } = getState();
+    const filtredExpenses = expenses
+      .filter((storeExp) => storeExp.id !== expense.id);
+    dispatch(removeExpenseAction(filtredExpenses));
   };
 }

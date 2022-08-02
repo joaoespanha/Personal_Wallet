@@ -1,3 +1,5 @@
+import * as actionTypes from '../actions/actionTypes';
+
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const REQUEST_API = 'REQUEST_API';
 const RECEIVE_DATA = 'RECEIVE_DATA';
@@ -28,7 +30,6 @@ export default function wallet(state = INITIAL_STATE, action) {
       currencies: action.payload,
     };
   case ADD_EXPENSE:
-
     return {
       ...state,
       expenses: [...state.expenses, action.expense],
@@ -38,6 +39,11 @@ export default function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       totalExpenses: action.totalExpenses,
+    };
+  case actionTypes.REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: action.filtredExpenses,
     };
 
   default:
