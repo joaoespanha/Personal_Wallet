@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
+import tableCols from '../helpers/tableCols';
 
-export default class Table extends Component {
+class Table extends Component {
   render() {
     return (
-      <div>Table</div>
+      <table>
+        <tr>
+          {tableCols.map((col) => (<th scope="col" key={ col }>{col}</th>))}
+
+          <tr>
+            <td>ola</td>
+          </tr>
+        </tr>
+      </table>
     );
   }
 }
+
+/* const mapStateToProps = (state) => ({
+
+}); */
+export default Table;

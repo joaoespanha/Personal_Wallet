@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import WalletForm from '../components/WalletForm';
+import Table from '../components/Table';
 import { getCurrCodes } from '../redux/actions/index';
 
 class Wallet extends React.Component {
@@ -23,6 +24,7 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <WalletForm />
+        <Table />
       </div>
     );
   }
