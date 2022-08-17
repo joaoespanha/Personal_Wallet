@@ -29,7 +29,7 @@ class Login extends React.Component {
     const emailInput = this.emailValidation(email);
     const passwordInput = this.passwordValidation(password);
     const checks = [emailInput, passwordInput];
-    console.log(checks);
+    // console.log(checks);
     this.setState({ isBtnEnabled: checks.every((check) => check === true) });
   }
 

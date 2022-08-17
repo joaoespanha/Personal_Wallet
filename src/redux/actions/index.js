@@ -17,7 +17,7 @@ export const addExpenseAction = (expense) => ({ type: actionTypes.ADD_EXPENSE, e
 const removeExpenseAction = (filtredExpenses) => (
   { type: actionTypes.REMOVE_EXPENSE, filtredExpenses });
 
-// thunkFuntions
+// ThunkFunctions
 
 export function getCurrCodes() {
   return async (dispatch) => {
