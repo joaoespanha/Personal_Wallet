@@ -11,10 +11,5 @@ import {initialState} from './helpers/mockConsts';
 
   // console.log(coinCodes);
 describe('tests the Wallet page', () => {
-    beforeEach(() => {
-        renderWithRouterAndRedux(<Wallet/>, {initialState});
-    })
-    it('tests', () => {
-        screen.getAllByRole('option', {name:/moeda/i})
-    })
+    
 })
