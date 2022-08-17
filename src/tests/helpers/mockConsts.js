@@ -51,6 +51,17 @@ export const initialState = {
     }
   };
 
+ export const newExpense = () => ({
+      value: '100',
+      currency: 'CAD',
+      method: 'Cartão de crédito',
+      tag: 'Lazer',
+      description: 'PEWDs Merch',
+      id: 13,
+      exchangeRates:mockData,
+})
+
+
 
 export const totalExpended = () => {
     const {wallet:{expenses}} = initialState;

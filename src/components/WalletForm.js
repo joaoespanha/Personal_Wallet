@@ -24,6 +24,11 @@ class WalletForm extends Component {
     sumExp();
   }
 
+  componentDidUpdate() {
+    const { sumExp } = this.props;
+    sumExp();
+  }
+
   handleInputChange = ({ target: { value, name } }) => {
     this.setState({
       [name]: value,
